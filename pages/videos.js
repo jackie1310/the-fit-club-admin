@@ -6,7 +6,14 @@ import { useEffect, useState } from "react";
 export default function Videos () {
     const [videos, setVideos] = useState([]);
     useEffect(() => {
-        axios.get('/api/videos').then(response => setVideos(response.data));
+        axios.get('/api/videos').then(response => {
+            if (response.status === 200) {
+                setVideos(response.data);
+            }
+            else if (response.status === 202) {
+                alert(response.data)
+            }
+        });
     }, []);
     console.log(videos);
     return (

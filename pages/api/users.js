@@ -7,8 +7,8 @@ import { isAdminRequest } from "./auth/[...nextauth]";
 export default async function handle(req, res) {
     const {method} = req;
     await mongooseConnect();
+    let alert = "Something went wrong";
     await isAdminRequest(req, res);
-    const alert = "Something went wrong";
 
     if (method === 'GET') {
         if (req.query?.id) {

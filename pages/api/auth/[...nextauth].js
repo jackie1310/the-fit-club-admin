@@ -3,7 +3,7 @@ import { MongoDBAdapter } from '@auth/mongodb-adapter';
 import NextAuth, { getServerSession } from 'next-auth/next';
 import GoogleProvider from 'next-auth/providers/google';
 
-const adminEmails = ['an.nguyenviet.13.10@gmail.com', '23560092@gm.uit.edu.vn'];
+const adminEmails = [ '23560092@gm.uit.edu.vn'];
 
 export const authOptions = {
     providers: [
@@ -13,15 +13,6 @@ export const authOptions = {
         }),
     ],
     adapter: MongoDBAdapter(clientPromise),
-    callbacks: {
-        session: ({session, token, user}) => {
-            if (adminEmails.includes(session?.user?.email)) {
-                return session;
-            } else {
-                return false;
-            }
-        }
-    }
 };
 
 export default NextAuth(authOptions);
@@ -29,7 +20,7 @@ export default NextAuth(authOptions);
 export async function isAdminRequest(req, res) {
     const session = await getServerSession(req, res, authOptions);
     if (!adminEmails.includes(session?.user?.email)) {
-        res.status(401);
+        res.status(202).json("You are not the admin");
         res.end();
         throw 'You are not the admin';
     }

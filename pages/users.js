@@ -7,7 +7,12 @@ export default function Users() {
     const [users, setUsers] = useState([]);
     useEffect(() => {
         axios.get('/api/users').then(response => {
-            setUsers(response.data);
+            if (response.status === 200) {
+                setUsers(response.data);
+            }
+            else if (response.status === 202) {
+                alert(response.data)
+            }
         });
     }, []);
     return (

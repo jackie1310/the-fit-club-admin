@@ -2,6 +2,7 @@ import multiparty from 'multiparty';
 import {PutObjectCommand, S3Client} from '@aws-sdk/client-s3'; // AWS S3 Bucket
 import fs from 'fs'; // To read file
 import mime from 'mime-types' // To read file engine
+import { isAdminRequest } from './auth/[...nextauth]';
 const bucketName = 'the-fit-club';
 
 export default async function handle(req, res) {
